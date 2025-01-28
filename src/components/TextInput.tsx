@@ -2,7 +2,7 @@ import { TextField } from "@mui/material";
 import { TextInputTypes } from "../utils/types";
 import { useState } from "react";
 
-interface TextInputProps {
+export interface TextInputProps {
   label: string;
   dataTestId: string;
   type: TextInputTypes;
@@ -22,7 +22,7 @@ const TextInput = ({ label, dataTestId, type }: TextInputProps) => {
       label={label}
       slotProps={{
         htmlInput: {
-          "data-testid": { dataTestId },
+          "data-testid": dataTestId ,
           type,
         },
       }}
