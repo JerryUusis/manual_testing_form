@@ -3,6 +3,7 @@ import { ThemeProvider } from "@mui/material";
 import { theme } from "./utils/theme";
 import CssBaseline from "@mui/material/CssBaseline";
 import Login from "./routes/Login";
+import CreateBugReportSurvey from "./routes/CreateBugReportSurvey";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" />
           <Route path="/login" element={<Login />} />
+          <Route path="/new" element={<CreateBugReportSurvey />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
