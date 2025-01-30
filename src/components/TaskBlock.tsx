@@ -8,12 +8,16 @@ import List from "@mui/material/List";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import InstructionListItem from "./InstructionListItem";
+import IssueNumberInputs from "./IssueNumberInputs";
+import CloseIcon from "@mui/icons-material/Close";
 
-interface TaskBlockProps {
+export interface TaskBlockProps {
   taskNumber: number;
+  handleRemoveTaskBlock: (id: string) => void;
+  id: string;
 }
 
-const TaskBlock = ({ taskNumber }: TaskBlockProps) => {
+const TaskBlock = ({ taskNumber, handleRemoveTaskBlock }: TaskBlockProps) => {
   const [instruction, setInstruction] = useState<string[]>([]);
   const [listInput, setListInput] = useState<string>("");
   const [taskTitle, setTaskTitle] = useState<string>("");
@@ -42,11 +46,16 @@ const TaskBlock = ({ taskNumber }: TaskBlockProps) => {
         flexDirection: "column",
         gap: "1rem",
         padding: "4rem",
+        position: "relative",
       }}
       elevation={1}
       component={Paper}
     >
-      <Typography variant="h4">Task {taskNumber}</Typography>
+      <IconButton sx={{ position: "absolute", top: "0", right: "0" }} onClick={() => handleRemoveTaskBlock(taskNumber)}>
+        <CloseIcon />
+      </IconButton>
+      <Typography variant="h2">Task {taskNumber}</Typography>
+      <IssueNumberInputs />
       {isTitleStored ? (
         <Box
           sx={{
@@ -55,7 +64,7 @@ const TaskBlock = ({ taskNumber }: TaskBlockProps) => {
             alignItems: "center",
           }}
         >
-          <Typography variant="h5">{taskTitle}</Typography>
+          <Typography variant="h2">{taskTitle}</Typography>
           <IconButton onClick={toggleIsTitleStored}>
             <EditIcon />
           </IconButton>
