@@ -1,15 +1,13 @@
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import TextInput from "./TextInput";
+import Paper from "@mui/material/Paper";
 import { useState } from "react";
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import IconButton from "@mui/material/IconButton";
-import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import EditIcon from "@mui/icons-material/Edit";
+import InstructionListItem from "./InstructionListItem";
 
 interface TaskBlockProps {
   taskNumber: number;
@@ -22,12 +20,12 @@ const TaskBlock = ({ taskNumber }: TaskBlockProps) => {
   const [isTitleStored, setIsTitleStored] = useState(false);
 
   const addToInstruction = () => {
-    setInstruction((previoussState) => [...previoussState, listInput]);
+    setInstruction((previousState) => [...previousState, listInput]);
     setListInput("");
   };
 
-  const storeTitle = () => {
-    setIsTitleStored(true);
+  const toggleIsTitleStored = () => {
+    setIsTitleStored((previusState) => !previusState);
   };
 
   const filterInstruction = (instructionText: string) => {
@@ -37,12 +35,17 @@ const TaskBlock = ({ taskNumber }: TaskBlockProps) => {
     setInstruction(filteredInstructions);
   };
 
-  const handleEdit = () => {
-    setIsTitleStored(false);
-  };
-
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "1rem",
+        padding: "4rem",
+      }}
+      elevation={1}
+      component={Paper}
+    >
       <Typography variant="h4">Task {taskNumber}</Typography>
       {isTitleStored ? (
         <Box
@@ -53,7 +56,7 @@ const TaskBlock = ({ taskNumber }: TaskBlockProps) => {
           }}
         >
           <Typography variant="h5">{taskTitle}</Typography>
-          <IconButton onClick={handleEdit}>
+          <IconButton onClick={toggleIsTitleStored}>
             <EditIcon />
           </IconButton>
         </Box>
@@ -67,25 +70,19 @@ const TaskBlock = ({ taskNumber }: TaskBlockProps) => {
           setExternalState={setTaskTitle}
         />
       ) : null}
-      {!isTitleStored ? <Button onClick={storeTitle}>Save title</Button> : null}
+      {!isTitleStored ? (
+        <Button onClick={toggleIsTitleStored}>Save title</Button>
+      ) : null}
       <List>
         {instruction.map((instructionText, index) => (
-          <ListItem
-            key={index}
-            secondaryAction={
-              <ListItemButton
-                onClick={() => {
-                  filterInstruction(instructionText);
-                }}
-              >
-                <ListItemIcon>
-                  <RemoveCircleIcon />
-                </ListItemIcon>
-              </ListItemButton>
-            }
-          >
-            {instructionText}
-          </ListItem>
+          <InstructionListItem
+            key={`instruction_${index.toString()}`}
+            filterInstruction={() => {
+              filterInstruction(instructionText);
+            }}
+            instructionText={instructionText}
+            dataTestId={`instructionListItem${index.toString()}`}
+          />
         ))}
       </List>
       <TextInput

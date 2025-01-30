@@ -5,7 +5,7 @@ import TaskBlock from "../components/TaskBlock";
 import { useState } from "react";
 
 const CreateBugReportSurvey = () => {
-  const [taskBlocks, setTaskBlocks] = useState<string[]>([]);
+  const [taskBlocks, setTaskBlocks] = useState<string[]>(["task"]);
 
   const handleCreateNewBlock = () => {
     const newItem = "task";
@@ -20,7 +20,7 @@ const CreateBugReportSurvey = () => {
         width: "100vw",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        py: "4rem",
       }}
     >
       <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>

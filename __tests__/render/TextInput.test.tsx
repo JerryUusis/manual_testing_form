@@ -12,9 +12,10 @@ describe("<TextInput />", () => {
       type: "text",
       dataTestId: "testId",
       label: "test label",
+      value: "test value",
     };
 
-    const { type, dataTestId, label } = testData;
+    const { type, dataTestId, label, value } = testData;
 
     beforeEach(() => {
       renderWithTheme(<TextInput {...testData} />, theme);
@@ -31,6 +32,10 @@ describe("<TextInput />", () => {
     test("should have the right input type", () => {
       const textInput = screen.getByTestId(dataTestId);
       expect(textInput).toHaveAttribute("type", type);
+    });
+    test("should have the right value", () => {
+      const textInput = screen.getByTestId(dataTestId);
+      expect(textInput).toHaveValue(value);
     });
   });
 });
