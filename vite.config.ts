@@ -10,7 +10,8 @@ export default defineConfig({
     exclude: ["./__tests__/e2e/**", "./node_modules"],
     globals: true,
     coverage: {
-      include: ["src"]
-    }
+      include: ["src"],
+    },
+    setupFiles: "./__tests__/testSetup.ts",
   },
 });
