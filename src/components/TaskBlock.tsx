@@ -4,23 +4,38 @@ import TextInput from "./TextInput";
 import Paper from "@mui/material/Paper";
 import { useState } from "react";
 import Button from "@mui/material/Button";
-import List from "@mui/material/List";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
-import InstructionListItem from "./InstructionListItem";
+import IssueNumberInputs from "./IssueNumberInputs";
+import CloseIcon from "@mui/icons-material/Close";
+import InstructionList from "./InstructionList";
 
-interface TaskBlockProps {
+export interface TaskBlockProps {
   taskNumber: number;
+  handleRemoveTaskBlock: (id: string) => void;
+  id: string;
 }
 
-const TaskBlock = ({ taskNumber }: TaskBlockProps) => {
-  const [instruction, setInstruction] = useState<string[]>([]);
+export interface InstructionObject {
+  instruction: string;
+  id: string;
+}
+
+const TaskBlock = ({
+  taskNumber,
+  handleRemoveTaskBlock,
+  id,
+}: TaskBlockProps) => {
+  const [instruction, setInstruction] = useState<InstructionObject[]>([]);
   const [listInput, setListInput] = useState<string>("");
   const [taskTitle, setTaskTitle] = useState<string>("");
   const [isTitleStored, setIsTitleStored] = useState(false);
 
   const addToInstruction = () => {
-    setInstruction((previousState) => [...previousState, listInput]);
+    setInstruction((previousState) => [
+      ...previousState,
+      { instruction: listInput, id: crypto.randomUUID() },
+    ]);
     setListInput("");
   };
 
@@ -28,9 +43,9 @@ const TaskBlock = ({ taskNumber }: TaskBlockProps) => {
     setIsTitleStored((previusState) => !previusState);
   };
 
-  const filterInstruction = (instructionText: string) => {
+  const filterInstruction = (id: string) => {
     const filteredInstructions = instruction.filter(
-      (instruction) => instructionText !== instruction
+      (instruction) => id !== instruction.id
     );
     setInstruction(filteredInstructions);
   };
@@ -40,22 +55,34 @@ const TaskBlock = ({ taskNumber }: TaskBlockProps) => {
       sx={{
         display: "flex",
         flexDirection: "column",
+        alignItems:"center",
         gap: "1rem",
-        padding: "4rem",
+        padding: "2rem",
+        position: "relative",
+        width: "750px",
       }}
       elevation={1}
       component={Paper}
     >
-      <Typography variant="h4">Task {taskNumber}</Typography>
+      <IconButton
+        sx={{ position: "absolute", top: "0", right: "0" }}
+        onClick={() => {
+          handleRemoveTaskBlock(id);
+        }}
+      >
+        <CloseIcon />
+      </IconButton>
+      <Typography variant="h2" sx={{alignSelf:"start"}}>Task {taskNumber}</Typography>
+      <IssueNumberInputs />
       {isTitleStored ? (
         <Box
           sx={{
             display: "flex",
-            justifyContent: "flex-start",
+
             alignItems: "center",
           }}
         >
-          <Typography variant="h5">{taskTitle}</Typography>
+          <Typography sx={{ fontWeight: "bold" }}>{taskTitle}</Typography>
           <IconButton onClick={toggleIsTitleStored}>
             <EditIcon />
           </IconButton>
@@ -73,18 +100,10 @@ const TaskBlock = ({ taskNumber }: TaskBlockProps) => {
       {!isTitleStored ? (
         <Button onClick={toggleIsTitleStored}>Save title</Button>
       ) : null}
-      <List>
-        {instruction.map((instructionText, index) => (
-          <InstructionListItem
-            key={`instruction_${index.toString()}`}
-            filterInstruction={() => {
-              filterInstruction(instructionText);
-            }}
-            instructionText={instructionText}
-            dataTestId={`instructionListItem${index.toString()}`}
-          />
-        ))}
-      </List>
+      <InstructionList
+        filterInstruction={filterInstruction}
+        instructionsArray={instruction}
+      />
       <TextInput
         label="Add instruction"
         dataTestId="instructionBlock"
