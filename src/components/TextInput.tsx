@@ -38,6 +38,7 @@ const TextInput = ({
       }}
       value={value}
       onChange={handleOnChange}
+      fullWidth
     />
   );
 };

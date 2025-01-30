@@ -28,8 +28,13 @@ const CreateBugReportSurvey = () => {
     setTaskBlocks(filteredTaskBlocks);
   };
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
+
   return (
     <Box
+      component={"form"}
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -38,8 +43,17 @@ const CreateBugReportSurvey = () => {
         alignItems: "center",
         py: "4rem",
       }}
+      onSubmit={handleSubmit}
     >
-      <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "1rem",
+          alignItems: "center",
+          mb: "3rem",
+        }}
+      >
         <Typography variant="h1">Create a bug report survey</Typography>
         <Box
           sx={{
@@ -61,6 +75,7 @@ const CreateBugReportSurvey = () => {
         </Box>
         <Button onClick={handleCreateNewBlock}>Create new task</Button>
       </Box>
+      <Button type="submit">Publish survey</Button>
     </Box>
   );
 };

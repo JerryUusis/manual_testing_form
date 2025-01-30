@@ -55,6 +55,7 @@ const TaskBlock = ({
       sx={{
         display: "flex",
         flexDirection: "column",
+        alignItems:"center",
         gap: "1rem",
         padding: "2rem",
         position: "relative",
@@ -71,7 +72,7 @@ const TaskBlock = ({
       >
         <CloseIcon />
       </IconButton>
-      <Typography variant="h2">Task {taskNumber}</Typography>
+      <Typography variant="h2" sx={{alignSelf:"start"}}>Task {taskNumber}</Typography>
       <IssueNumberInputs />
       {isTitleStored ? (
         <Box

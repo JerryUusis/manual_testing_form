@@ -22,15 +22,21 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           listStyleType: "number",
-          paddingLeft: "1rem", 
+          paddingLeft: "1rem",
         },
       },
     },
     MuiListItem: {
       styleOverrides: {
         root: {
-          display: "list-item"
+          display: "list-item",
         },
+      },
+    },
+    MuiButton: {
+      defaultProps: {
+        variant: "contained",
+        size: "small"
       },
     },
   },
