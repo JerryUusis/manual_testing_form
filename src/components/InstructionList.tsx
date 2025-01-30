@@ -11,6 +11,10 @@ const InstructionList = ({
   instructionsArray,
   filterInstruction,
 }: InstructionListProps) => {
+  if (instructionsArray.length === 0) {
+    return null;
+  }
+
   return (
     <List>
       {instructionsArray.map((instructionObject, index) => (

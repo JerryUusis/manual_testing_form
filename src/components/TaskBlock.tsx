@@ -56,8 +56,9 @@ const TaskBlock = ({
         display: "flex",
         flexDirection: "column",
         gap: "1rem",
-        padding: "4rem",
+        padding: "2rem",
         position: "relative",
+        width: "750px",
       }}
       elevation={1}
       component={Paper}
@@ -76,11 +77,11 @@ const TaskBlock = ({
         <Box
           sx={{
             display: "flex",
-            justifyContent: "flex-start",
+
             alignItems: "center",
           }}
         >
-          <Typography variant="h2">{taskTitle}</Typography>
+          <Typography sx={{ fontWeight: "bold" }}>{taskTitle}</Typography>
           <IconButton onClick={toggleIsTitleStored}>
             <EditIcon />
           </IconButton>
