@@ -8,19 +8,29 @@ export const theme = createTheme({
   },
   typography: {
     h1: {
-      fontSize:"2rem"
+      fontSize: "2rem",
     },
     h2: {
-      fontSize:"1.5rem"
+      fontSize: "1.5rem",
     },
     h3: {
-      fontSize:"1rem",
-    }
+      fontSize: "1rem",
+    },
   },
   components: {
-    MuiButton: {
-      defaultProps: {
-        variant: "outlined",
+    MuiList: {
+      styleOverrides: {
+        root: {
+          listStyleType: "number",
+          paddingLeft: "1rem", 
+        },
+      },
+    },
+    MuiListItem: {
+      styleOverrides: {
+        root: {
+          display: "list-item"
+        },
       },
     },
   },
